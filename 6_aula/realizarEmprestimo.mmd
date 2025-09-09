@@ -1,0 +1,24 @@
+sequenceDiagram
+    actor Membro do Clube
+    participant TelaDeEmprestimo 
+    participant Controlador
+    participant MembroObj
+    participant LivroObj
+    participant EmprestimoObj
+
+    Membro do Clube->>+TelaDeEmprestimo: solicitaEmprestimo(livro)
+    TelaDeEmprestimo->>+Controlador: processarEmprestimo(livro, membro)
+    
+    Controlador->>+LivroObj: verificarDisponibilidade()
+    LivroObj-->>-Controlador: [disponível]
+    
+    Controlador->>+EmprestimoObj: criar(membro, livro)
+    deactivate EmprestimoObj
+    
+    Controlador->>+LivroObj: marcarComoIndisponivel()
+    deactivate LivroObj
+    
+    Controlador-->>-TelaDeEmprestimo: "Empréstimo realizado com sucesso!"
+    TelaDeEmprestimo-->>-Membro do Clube: Exibe mensagem de sucesso
+
+
