@@ -1,0 +1,47 @@
+classDiagram
+    direction LR
+
+    class Pessoa {
+        <<Abstract>>
+        -id: int
+        -nome: String
+        -email: String
+        +autenticar(): boolean
+    }
+
+    class Membro {
+        -dataInscricao: Date
+        +solicitarEmprestimo(livro: Livro): Emprestimo
+        +devolverLivro(emprestimo: Emprestimo): void
+    }
+
+    class Administrador {
+        -nivelAcesso: String
+        +cadastrarLivro(dadosLivro): Livro
+        +gerenciarMembro(membro: Membro): void
+    }
+
+    class Livro {
+        -isbn: String
+        -titulo: String
+        -autor: String
+        -status: String
+        +verificarDisponibilidade(): boolean
+        +atualizarStatus(novoStatus: String): void
+    }
+
+    class Emprestimo {
+        -idEmprestimo: int
+        -dataEmprestimo: Date
+        -dataDevolucaoPrevista: Date
+        -dataDevolucaoReal: Date
+        +calcularMulta(): float
+    }
+
+    Pessoa <|-- Membro
+    Pessoa <|-- Administrador
+
+    Membro "1" -- "0..*" Emprestimo : realiza
+    Livro "1" -- "1" Emprestimo : é objeto de
+
+# Diagrama do Clube do Livro
